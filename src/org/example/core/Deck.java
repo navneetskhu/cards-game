@@ -1,25 +1,35 @@
 package org.example.core;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class Deck {
-    public ArrayList<Card> deck = new ArrayList<Card>();
-    public ArrayList<Card> delt = new ArrayList<Card>();
+public class Deck extends Hand {
+    private final ArrayList<Card> dealt = new ArrayList<Card>();
+    Random rand = new Random();
 
     public Deck() {
-        for(int i = 1 ; i <= 13 ; i++){
-            deck.add(new Card(i,Suite.CLUBS));
-            deck.add(new Card(i,Suite.DIAMONDS));
-            deck.add(new Card(i,Suite.HEARTS));
-            deck.add(new Card(i,Suite.SPADE));
+        populate();
+        shuffle();
+    }
+
+    public void populate() {
+        for (Suite suite : Suite.values()) {
+            for (Rank rank : Rank.values()) {
+                Card card = new Card(rank, suite);
+                this.add(card);
+            }
         }
     }
 
-    public Card dealCard(){
-        int rand = (int)(Math.random() * ((deck.size() - 1)));
-        Card c = deck.get(rand);
-        deck.remove(c);
-        delt.add(c);
-        return c;
+    public void shuffle() {
+        Collections.shuffle(this.cards());
+    }
+
+    public Card dealCard() {
+        List<Card> cards = this.cards();
+        int rand = this.rand.nextInt(cards.size());
+        Card card = cards.get(rand);
+        cards.remove(card);
+        dealt.add(card);
+        return card;
     }
 }

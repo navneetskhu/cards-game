@@ -1,8 +1,12 @@
 package org.example.core;
 
 public class Game implements AutoCloseable {
-    private Game() {
-        deck = new Deck();
+
+    private static Game instance;
+    private final Deck deck;
+
+    private Game(Deck deck) {
+        this.deck = deck;
     }
 
     @Override
@@ -11,43 +15,40 @@ public class Game implements AutoCloseable {
         instance = null;
     }
 
-    public void dealCard(Player p) {
-        p.hand.add(deck.dealCard());
+    public void deal(Player player) {
+        player.getHand().cards().add(deck.dealCard());
     }
 
-    public void printWinner(Player p1, Player p2) {
-        Card c1 = null;
-        Card c2 = null;
-        for (Card c : p1.hand) {
-            if (c1 == null) {
-                c1 = c;
-            } else if (c.value > c1.value)  {
-                 c1 = c;
-            }
-        }
-        for (Card c : p2.hand) {
-            if (c2 == null) {
-                c2 = c;
-            } else if (c.value > c2.value)  {
-                c2 = c;
-            }
-        }
-        if (c1.value > c2.value) {
+    public void printWinner(Player player1, Player player2) {
+        int rank1 = player1.getHand().totalPoints();
+        int rank2 = player2.getHand().totalPoints();
+
+        System.out.println(rank1);
+        System.out.println(rank2);
+        if (rank1 > rank2) {
             System.out.println("Player 1 wins");
-        } else if (c2.value > c1.value) {
+        } else if (rank2 > rank1) {
             System.out.println("Player 2 wins");
         } else {
             System.out.println("It's a tie");
         }
     }
 
-    public static Game getInstance() {
+    public static Game instance(Deck deck) {
         if (instance == null) {
-            instance = new Game();
+            instance = new Game(deck);
         }
         return instance;
     }
 
-    private static Game instance;
-    private Deck deck;
+    public void shuffleDeck(){
+        deck.shuffle();
+    }
+
+    public void resetDeck(){
+        deck.clear();
+        deck.populate();
+        deck.populate();
+    }
+
 }

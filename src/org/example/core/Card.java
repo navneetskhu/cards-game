@@ -1,18 +1,34 @@
 package org.example.core;
 
 public class Card {
-    public String suite;
-    public int value;
-    public Card(int value, String suite) {
+    private final Suite suite;
+    private final Rank rank;
+    private boolean isFaceUp;
+
+    public Card(Rank rank, Suite suite) {
         this.suite = suite;
-        this.value = value;
+        this.rank = rank;
+        isFaceUp = false;
+    }
+
+    public String getSuit() {
+        return suite.suitName();
+    }
+
+    public int getRank() {
+        return rank.getRank();
+    }
+
+    public void flipCard() {
+        isFaceUp = !isFaceUp;
     }
 
     @Override
     public String toString() {
-        return "Card{" +
-                "suite='" + suite + '\'' +
-                ", value=" + value +
-                '}';
+        String st = " ";
+        if (isFaceUp) {
+            st += rank.getRankString() + " of " + getSuit() + " ";
+        }
+        return st;
     }
 }

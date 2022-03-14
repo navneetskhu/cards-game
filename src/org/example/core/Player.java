@@ -1,15 +1,21 @@
 package org.example.core;
 
-import java.util.ArrayList;
-
 public class Player {
-    public ArrayList<Card> hand;
+    private final Hand hand;
 
     public Player() {
-        hand = new ArrayList<>();
+        hand = new Hand();
     }
 
-    public void showHand() {
-        System.out.println(hand);
+    public String show() {
+        return hand.showHand();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void clearHand() {
+        hand.clear();
     }
 }

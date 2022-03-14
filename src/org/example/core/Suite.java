@@ -1,8 +1,18 @@
 package org.example.core;
 
-public interface Suite {
-    String HEARTS = "H";
-    String SPADE = "S";
-    String CLUBS = "C";
-    String DIAMONDS = "D";
+public enum Suite {
+    HEARTS("Hearts"),
+    SPADES("Spades"),
+    CLUBS("Clubs"),
+    DIAMONDS("Diamonds");
+
+    private final String suitName;
+
+    Suite(String suitName) {
+        this.suitName = suitName;
+    }
+
+    public String suitName() {
+        return suitName;
+    }
 }

@@ -1,19 +1,27 @@
 package org.example;
 
+import org.example.core.Deck;
 import org.example.core.Game;
 import org.example.core.Player;
 
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) {
-        Player p1 = new Player();
-        Player p2 = new Player();
-        Game game = Game.getInstance();
-        for (int i= 0; i < 5; i++) {
-            game.dealCard(p1);
-            game.dealCard(p2);
+
+        Player player1 = new Player();
+        Player player2 = new Player();
+
+        Game game = Game.instance(new Deck());
+        for (int i = 0; i < 5; i++) {
+            game.deal(player1);
+            game.deal(player2);
         }
-        p1.showHand();
-        p2.showHand();
-        game.printWinner(p1, p2);
+        System.out.println(player1.show());
+        System.out.println(player2.show());
+        game.printWinner(player1, player2);
+        player1.clearHand();
+        player2.clearHand();
+        game.resetDeck();
     }
 }
